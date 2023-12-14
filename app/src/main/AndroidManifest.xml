@@ -14,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
         <activity
+            android:name=".ForthAct"
+            android:exported="false" />
+        <activity
             android:name=".forthActivity"
             android:exported="false" />
         <activity
