@@ -1,14 +1,15 @@
 package com.MAD.myapplication
+
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.MAD.myapplication.R
-import org.json.JSONArray
 import org.json.JSONObject
 import java.net.URL
 import java.text.SimpleDateFormat
@@ -20,21 +21,19 @@ class forthActivity : AppCompatActivity() {
 
     private lateinit var locationAutoCompleteTextView: AutoCompleteTextView
     private lateinit var searchButton: Button
-    private lateinit var forecastTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_forth)
 
-        val Backbutton = findViewById<Button>(R.id.backbtn)
-        Backbutton.setOnClickListener {
+        val backButton = findViewById<Button>(R.id.backbtn)
+        backButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
 
         locationAutoCompleteTextView = findViewById(R.id.locationAutoCompleteTextView)
         searchButton = findViewById(R.id.searchButton)
-        forecastTextView = findViewById(R.id.forecastTextView)
 
         // Set up adapter for AutoCompleteTextView
         val adapter = ArrayAdapter<String>(
@@ -75,22 +74,33 @@ class forthActivity : AppCompatActivity() {
                 val jsonObj = JSONObject(result)
                 val list = jsonObj.getJSONArray("list")
 
+                // Remove previous forecast TextViews
+                val forecastContainer = findViewById<LinearLayout>(R.id.forecastContainer)
+                forecastContainer.removeAllViews()
+
                 // Display the forecast for the next 4 days
-                forecastTextView.text = "" // Clear previous forecast
                 for (i in 0 until 4) {
-                    val day = list.getJSONObject(i * 8) // Data for every 3 hours, so skip to the next day
-                    val main = day.getJSONObject("main")
-                    val temp = main.getString("temp")
+                    if (i * 8 < list.length()) {
+                        val day = list.getJSONObject(i * 8) // Data for every 3 hours, so skip to the next day
+                        val main = day.getJSONObject("main")
+                        val temp = main.getString("temp")
 
-                    val dateText = getDateText(day.getString("dt"))
-                    val forecast = "$dateText: $temp °C"
+                        val dateText = getDateText(day.getString("dt"))
+                        val forecast = "$dateText: $temp °C"
 
-                    // Append forecast to the TextView
-                    forecastTextView.append("$forecast\n")
+                        // Create a new TextView for each forecast
+                        val forecastTextView = TextView(this@forthActivity)
+                        forecastTextView.text = forecast
+
+                        // Add the TextView to the forecastContainer
+                        forecastContainer.addView(forecastTextView)
+                    }
                 }
 
                 // Display the selected location
-                forecastTextView.append("Location: ${locationAutoCompleteTextView.text}")
+                val locationTextView = TextView(this@forthActivity)
+                locationTextView.text = "Location: ${locationAutoCompleteTextView.text}"
+                forecastContainer.addView(locationTextView)
 
             } catch (e: Exception) {
                 // Handle exception (e.g., JSON parsing error)
