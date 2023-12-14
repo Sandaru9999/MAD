@@ -5,18 +5,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#d67ade"
     tools:context=".MainActivity">
+
+    <!-- ImageView for the background image -->
+    <ImageView
+        android:id="@+id/backgroundImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/mn"
+    android:scaleType="centerCrop"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent" />
 
     <!-- TextView for Activity A -->
     <TextView
         android:id="@+id/textViewActivityA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Activity A"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="Weather App"
+        android:textSize="38sp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/guideline" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Guidelines to separate top content from buttons -->
     <androidx.constraintlayout.widget.Guideline
@@ -26,44 +40,38 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.2" />
 
-    <!-- Button for Current Weather -->
+    <!-- Buttons for Current Weather, Search Location, and Forecast Weather -->
+
     <Button
         android:id="@+id/second_act_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="281dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="40dp"
         android:text="Current Weather"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/guideline" />
 
-    <!-- Button for Search Location -->
     <Button
         android:id="@+id/Third_act_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="279dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="32dp"
         android:text="Search Location"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/second_act_btn" />
 
-    <!-- Button for Forecast Weather -->
     <Button
         android:id="@+id/forth_act_btn"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="276dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="32dp"
         android:text="Forecast Weather"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Third_act_btn" />
-
-    <!-- ImageView for an image -->
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/unnamed"
-        app:layout_constraintTop_toBottomOf="@+id/forth_act_btn"
+        app:layout_constraintHorizontal_bias="0.518"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/Third_act_btn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
